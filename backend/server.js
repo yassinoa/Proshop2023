@@ -20,13 +20,12 @@ app.use('/api/products',ProductRoutes)
 app.use('/api/users',UserRoutes)
 app.use('/api/orders',orderRoutes)
 app.use('/api/upload',uploadRoutes)
-app.get('/',(req,res)=>{
-  res.send('API RUNNING ...') 
-})
+
 const __dirname=path.resolve()
 app.use('/uploads',express.static(path.join(__dirname,'/uploads')))
 
 if (process.env.NODE_ENV === 'production') {
+  console.log("hi")
   const __dirname = path.resolve();
   app.use('/uploads', express.static('/var/data/uploads'));
   app.use(express.static(path.join(__dirname, '/frontend/build')));

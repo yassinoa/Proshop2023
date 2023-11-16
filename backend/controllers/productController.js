@@ -6,11 +6,11 @@ import Product from '../models/productModel.js'
 // @route GET /api/products
 // @acces Public
 const getProducts = asyncHandler(async (req,res)=>{
-  const pageSize=8
+  const pageSize=process.env.PAGINATION_LIMIT
   const page=Number(req.query.pageNumber)||1
   const keyword=req.query.keyword ?{name:{$regex: req.query.keyword ,$options:'i'}} :{}
   const count=await Product.countDocuments({...keyword})
-  console.log("count :",count,"keyword: ",keyword, "skip :",pageSize * (page -1))
+  // console.log("count :",count,"keyword: ",keyword, "skip :",pageSize * (page -1))
 
   const products =await Product.find({...keyword})
     .limit(pageSize)
@@ -47,7 +47,7 @@ const createProduct = asyncHandler(async (req,res)=>{
     numReviews:0,
     description
   })
-  console.log(product)
+  // console.log(product)
   const createdProduct=await product.save()
   res.status(201).json(createdProduct) 
 })
@@ -93,7 +93,7 @@ const deleteProduct = asyncHandler(async (req,res)=>{
 // @acces Private
 const createProductReview = asyncHandler(async (req,res)=>{
   const {rating,comment}=req.body
-  console.log(rating , comment)
+  // console.log(rating , comment)
   const product =await Product.findById(req.params.id)
   if(product){
     const alreadyReviewed=product.reviews.find(
